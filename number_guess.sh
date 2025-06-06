@@ -50,5 +50,11 @@ while (( $GUESS != $NUMBER ))
 
 
   echo You guessed it in $COUNTER tries. The secret number was $NUMBER. Nice job!
-
-
+#check new best game
+if (( $COUNTER < $BEST_GAME || $BEST_GAME == 0 ))
+  then
+#insert data in table about best score and number of games
+    $PSQL "update players set games_played=games_played + 1, best_game = $COUNTER;"
+  else
+    $PSQL "update players set games_played=games_played + 1;"
+  fi
