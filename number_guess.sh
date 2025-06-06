@@ -12,7 +12,8 @@ if [[ -z $CHECK_USER_ROW ]]
 # user dont exist
     echo Welcome, $USER! It looks like this is your first time here.
 #insert him in base
-    INSERT_REPORT=$PSQL "insert into players(username) values($USER);"
+    INSERT_REPORT=$($PSQL "insert into players(username) values('$USER');")
+    
   else
     IFS="|" read GAMES_PLAYED BEST_GAME <<< "$CHECK_USER_ROW"
     echo Welcome back, $USER! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses.
@@ -54,7 +55,7 @@ while (( $GUESS != $NUMBER ))
 if (( $COUNTER < $BEST_GAME || $BEST_GAME == 0 ))
   then
 #insert data in table about best score and number of games
-    $PSQL "update players set games_played=games_played + 1, best_game = $COUNTER;"
+    UPADATE_REPORT=$($PSQL "update players set games_played=games_played + 1, best_game = $COUNTER;")
   else
-    $PSQL "update players set games_played=games_played + 1;"
+    UPADATE_REPORT=$($PSQL "update players set games_played=games_played + 1;")
   fi
