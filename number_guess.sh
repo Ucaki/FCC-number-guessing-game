@@ -7,6 +7,7 @@ read USER
 
 # user exist in db
 #echo Welcome back, $USER! You have played <games_played> games, and your best game took <best_game> guesses.
+CHECK_USER=$($PSQL "select username from players where username='$USER'")
 
 # user dont exist
 echo Welcome, $USER! It looks like this is your first time here.
