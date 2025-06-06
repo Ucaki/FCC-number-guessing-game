@@ -1,7 +1,7 @@
 #!/bin/bash
 PSQL="psql --username=freecodecamp -d guessing_game -t --no-align -c"
 
-NUMBER=$(( RANDOM % 100  + 1 ))
+NUMBER=$(( RANDOM % 1000  + 1 ))
 echo Enter your username:
 read USER
 
