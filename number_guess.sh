@@ -16,7 +16,7 @@ if [[ -z $CHECK_USER_ROW ]]
     
   else
     IFS="|" read GAMES_PLAYED BEST_GAME <<< "$CHECK_USER_ROW"
-    echo Welcome back, $USER! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses.
+    echo "Welcome back, $USER! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
   fi
 echo Guess the secret number between 1 and 1000:
 GUESS=0
