@@ -8,11 +8,13 @@ read USER
 # user exist in db
 #echo Welcome back, $USER! You have played <games_played> games, and your best game took <best_game> guesses.
 CHECK_USER=$($PSQL "select username from players where username='$USER'")
-
+if [[ -z $CHECK_USER ]]
+  then
 # user dont exist
-echo Welcome, $USER! It looks like this is your first time here.
-#probbly enter him in base here?
-
+    echo Welcome, $USER! It looks like this is your first time here.
+#enter him in base
+    $PSQL "insert into players(username) values($USER);"
+  
 echo Guess the secret number between 1 and 1000:
 GUESS=0
 COUNTER=0
