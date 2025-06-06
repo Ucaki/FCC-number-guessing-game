@@ -1,20 +1,22 @@
 #!/bin/bash
 PSQL="psql --username=freecodecamp -d guessing_game -t --no-align -c"
 
-NUMBER=$(( RANDOM % 400  + 1 ))
+NUMBER=$(( RANDOM % 100  + 1 ))
 echo Enter your username:
 read USER
 
 # user exist in db
-#echo Welcome back, $USER! You have played <games_played> games, and your best game took <best_game> guesses.
-CHECK_USER=$($PSQL "select username from players where username='$USER'")
-if [[ -z $CHECK_USER ]]
+CHECK_USER_ROW=$($PSQL "select games_played, best_game from players where username='$USER'")
+if [[ -z $CHECK_USER_ROW ]]
   then
 # user dont exist
     echo Welcome, $USER! It looks like this is your first time here.
-#enter him in base
-    $PSQL "insert into players(username) values($USER);"
-  
+#insert him in base
+    INSERT_REPORT=$PSQL "insert into players(username) values($USER);"
+  else
+    IFS="|" read GAMES_PLAYED BEST_GAME <<< "$CHECK_USER_ROW"
+    echo Welcome back, $USER! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses.
+  fi
 echo Guess the secret number between 1 and 1000:
 GUESS=0
 COUNTER=0
